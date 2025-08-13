@@ -1,0 +1,9 @@
+.no-horz-padding {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+#bannerlist > li { 
+	font-size: 16px;
+	line-height: 200%;
+}
