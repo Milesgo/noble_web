@@ -18,7 +18,7 @@ var KTDatatables = function() {
                 style: 'multi',
                 selector: '.kt-checkable',
             },
-            ajax: "https://noble.lemongstory.com/api_datatable/BoardpostNew/" + $("#board_id").val(),
+            ajax: "/api_datatable/BoardpostNew/" + $("#board_id").val(),
             columns: [
                 {data: 'song_no'},
                 {data: 'song_no2'},

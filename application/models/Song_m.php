@@ -228,6 +228,8 @@ class Song_m extends CI_Model {
 			" ;
 		}
 
+		// log_message('info', 'song list sql: ' . $sql);
+
 		return array(
 			'pageInfo' => array(
 				'totalCount' => intval($count_result) ,
@@ -352,6 +354,8 @@ class Song_m extends CI_Model {
 
 		$sql .= ' GROUP BY song_no ';
 		$sql .= ' ORDER BY song_no DESC';
+
+		// log_message('info', 'song list for board: ' . $sql);
 
 		return $this->db->query($sql)->result();
 	}

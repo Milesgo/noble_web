@@ -108,12 +108,12 @@
 															<td style='text-align:center;'><?=number_format($totalCount)?>명</td>
 														</tr>
 
-													<?
+													<?php
 															}
 														} else {
 													?>
 														<tr><td colspan="4" style="text-align: center;">조회할 데이터가 없습니다</td></tr>
-													<?
+													<?php
 														}
 													?>
 													</tbody>

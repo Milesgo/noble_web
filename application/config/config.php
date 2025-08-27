@@ -24,7 +24,16 @@ date_default_timezone_set('Asia/Seoul');
 |
 */
 // $config['base_url'] = 'https://noble.lemongstory.com/';
-$config['base_url'] = 'http://noble.milestone.im/';
+// $config['base_url'] = 'https://noble.nobleocarina.com/';
+
+// 동적으로 base_url 설정 (여러 도메인 지원)
+if (isset($_SERVER['HTTP_HOST'])) {
+    $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'https://' : 'http://';
+    $config['base_url'] = $protocol . $_SERVER['HTTP_HOST'] . '/';
+} else {
+    // CLI나 특수한 경우를 위한 기본값
+    $config['base_url'] = 'https://noble.nobleocarina.com/';
+}
 
 /*
 |--------------------------------------------------------------------------

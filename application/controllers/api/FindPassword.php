@@ -56,7 +56,7 @@ class FindPassword extends REST_Controller {
 					$subject = "=?UTF-8?B?".base64_encode("[NOBLE 반주기] 비밀번호를 알려드립니다.")."?="; 
 
 $message ='<div style="max-width: 700px; background-color: #efefee; text-align: center;padding-top:100px; padding-bottom: 36px;">';
-$message .= '<div style="text-align: center;"><img src="https://noble.lemongstory.com/assets/images/email_title.png"></div>';
+$message .= '<div style="text-align: center;"><img src="'.SERVERURL.'/assets/images/email_title.png"></div>';
 $message .= '<div style="text-align: center; color: #563A28; font-size: 18px; margin-top:48px; line-height:24px;">안녕하세요. 노블 오카리나입니다.<br>비밀번호를 알려드립니다. 감사합니다.</div>';
 $message .= '<div style="margin-top:68px; margin-left: auto; margin-right: auto; margin-bottom: 30px; text-align: center; background-color: #FFFFFF; width: 68%;height: 58px; min-width: 300px;color: #563A28; font-size: 18px; line-height: 58px;">메일주소 : '.$searchParam['mem_email'].'</div>';
 $message .= '<div style="margin: 0 auto; text-align: center; background-color: #FFFFFF; width: 68%; height: 58px; min-width: 300px; color: #563A28; font-size: 18px; line-height: 58px;">비밀번호 : '.$new_password.'</div>';

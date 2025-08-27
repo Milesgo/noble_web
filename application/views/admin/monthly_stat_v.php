@@ -92,7 +92,7 @@
 <script>
 	$(document).ready(function() {
 		$('.btn_download').on("click", function(t) {
-            location.href="https://noble.lemongstory.com/download?board_id=monthly&year="+$(this).data("year")+"&month="+$(this).data("month");
+            location.href="<?=SERVERURL?>/download?board_id=monthly&year="+$(this).data("year")+"&month="+$(this).data("month");
         });
 	});	
 </script>

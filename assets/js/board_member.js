@@ -18,7 +18,7 @@ var KTDatatables = function() {
                 style: 'multi',
                 selector: '.kt-checkable',
             },
-            ajax: "https://noble.lemongstory.com/api_datatable/BoardpostNew/" + $("#board_id").val(),
+            ajax: "/api_datatable/BoardpostNew/" + $("#board_id").val(),
             columns: [
                 {data: 'mem_no'},
                 {data: 'mem_no'},
@@ -30,7 +30,7 @@ var KTDatatables = function() {
                 {data: 'mem_joindate'},
                 {data: 'mem_islive'}
             ],
-            order: [[ 6, "desc" ]],
+            order: [[ 1, "desc" ]],
             pageLength: 25,
             headerCallback: function(thead, data, start, end, display) {
                 thead.getElementsByTagName('th')[0].innerHTML = `
@@ -51,7 +51,7 @@ var KTDatatables = function() {
                         </label>`;
                     },
                 }, {
-                    targets: 3,
+                    targets: 4,
                     width: 70,
                     orderable: true,
                     render: function(data, type, full, meta) {                        
@@ -73,28 +73,28 @@ var KTDatatables = function() {
                        return temp_title;
                     },
                 }, {
-                    targets: 4,
+                    targets: 5,
                     orderable: true,
                     width: 100,
                     render: function(data, type, full, meta) {                        
                         return full.mem_cash.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                     },
                 }, {
-                    targets: 5,
+                    targets: 6,
                     orderable: true,
                     width: 130,
                     render: function(data, type, full, meta) {                        
                         return (full.mem_totime == '') ? '무료회원' : full.mem_totime;
                     },
                 }, {
-                    targets: 6,
+                    targets: 7,
                     orderable: true,
                     width: 130,
                     render: function(data, type, full, meta) {                        
                         return full.mem_joindate;
                     },
                 }, {
-                    targets: 7,
+                    targets: 8,
                     orderable: true,
                     width: 60,
                     render: function(data, type, full, meta) {                        

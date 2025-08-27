@@ -18,7 +18,7 @@ var KTDatatables = function() {
                 style: 'multi',
                 selector: '.kt-checkable',
             },
-            ajax: "https://noble.lemongstory.com/api_datatable/BoardpostNew/" + $("#board_id").val() + "/?year="+$("#year").val()+"&month="+$("#month").val(),
+            ajax: "/api_datatable/BoardpostNew/" + $("#board_id").val() + "/?year="+$("#year").val()+"&month="+$("#month").val(),
             columns: [
                 {data: 'song_title'},
                 {data: 'song_price'},

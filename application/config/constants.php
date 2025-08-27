@@ -93,8 +93,7 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 define('MAGO_ADMIN_SEQ',  'MAGO_ADMIN_SEQ') ;
 define('KEEP_ADMIN_SEQ', 'aq') ;
 define('ENCRYPT_KEY', 'MAGO') ;
-// define('SERVERURL', 'https://' . $_SERVER['SERVER_NAME']) ;
-define('SERVERURL', 'http://' . 'noble.milestone.im') ;
+define('SERVERURL', 'https://' . $_SERVER['HTTP_HOST']) ;
 define('UPLOADURL', 'https://noblemrplayer.s3.ap-northeast-2.amazonaws.com') ;
 
 /*

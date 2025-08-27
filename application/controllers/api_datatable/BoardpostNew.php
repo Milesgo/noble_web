@@ -16,9 +16,26 @@ class BoardpostNew extends REST_Controller {
 
     // public function song() {  $this->loadData("song"); }
     // public function banner() {  $this->loadData("banner"); }
-    // public function member() {  
-    //     $this->loadData("member"); 
-    // }
+    public function member_get() {  
+        // DataTables 서버사이드 처리
+        $datatable_params = array_merge([
+            'draw' => 1,
+            'start' => 0,
+            'length' => 25,
+            'search' => ['value' => ''],
+            'order' => [['column' => 0, 'dir' => 'desc']]
+        ], $this->get() ?: []);
+
+        $result = $this->member_m->selectMemberListForDataTable($datatable_params);
+        
+        // DataTables 형식으로 응답
+        $this->response([
+            'draw' => intval($datatable_params['draw']),
+            'recordsTotal' => $result['total_records'],
+            'recordsFiltered' => $result['filtered_records'],
+            'data' => $result['data']
+        ], REST_Controller::HTTP_OK);
+    }
     // public function notice() {  $this->loadData("notice"); }
     // public function purchase() {  $this->loadData("purchase"); }
     // public function monthly() {  $this->loadData("monthly", $this->input->get("year"), $this->input->get("month")); }
@@ -127,7 +144,25 @@ class BoardpostNew extends REST_Controller {
                 break;
 
             case 'member':
-                $alldata = $this->member_m->selectMemberListForBoard() ;
+                // DataTables 서버사이드 처리
+                $datatable_params = array_merge([
+                    'draw' => 1,
+                    'start' => 0,
+                    'length' => 10,
+                    'search' => ['value' => ''],
+                    'order' => [['column' => 0, 'dir' => 'desc']]
+                ], $_GET ?: []);
+
+                $result = $this->member_m->selectMemberListForDataTable($datatable_params);
+                
+                // DataTables 형식으로 응답
+                $this->response([
+                    'draw' => intval($datatable_params['draw']),
+                    'recordsTotal' => $result['total_records'],
+                    'recordsFiltered' => $result['filtered_records'],
+                    'data' => $result['data']
+                ], REST_Controller::HTTP_OK);
+                return;
 
                 $columnsDefault = [
                     'mem_no'     => true,

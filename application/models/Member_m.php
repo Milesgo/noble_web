@@ -503,4 +503,107 @@ class Member_m extends CI_Model {
 
 	}
 
+	/**
+	 * DataTables 서버사이드 페이징용 회원 목록 조회
+	 */
+	public function selectMemberListForDataTable($param = []) {
+		// 기본값 설정
+		if (!isset($param['draw'])) $param['draw'] = 1;
+		if (!isset($param['start'])) $param['start'] = 0;
+		if (!isset($param['length'])) $param['length'] = 25;
+		if (!isset($param['search']['value'])) $param['search']['value'] = '';
+		if (!isset($param['order'][0]['column'])) $param['order'][0]['column'] = 0; // m.mem_no
+		if (!isset($param['order'][0]['dir'])) $param['order'][0]['dir'] = 'desc';
+		
+		// 파라미터 로깅
+		// log_message('info', 'DataTable selectMemberListForDataTable params: ' . json_encode($param));
+		
+		$base_sql = "
+			SELECT
+				m.mem_no
+				, m.mem_name
+				, m.mem_email
+				, m.mem_jointype
+				, m.mem_cash
+				, IFNULL((SELECT acc_totime FROM MEMBER_ACCESS ma 
+						 JOIN LOG_PURCHASE lp2 ON ma.pur_no = lp2.pur_no 
+						 WHERE ma.mem_no = m.mem_no 
+						 AND lp2.product_id like 'noble\_%' 
+						 AND ma.acc_islive='Y' 
+						 ORDER BY ma.acc_no DESC LIMIT 1),'') mem_totime
+				, m.mem_joindate
+				, m.mem_islive
+			FROM
+				MEMBER m
+		";
+
+		$where_conditions = [];
+		$where_conditions[] = " ifnull(m.mem_outdate, 0) = 0 ";
+
+		// 검색 조건 추가
+		if (!empty($param['search']['value'])) {
+			$search = $this->db->escape_like_str($param['search']['value']);
+			$where_conditions[] = " (m.mem_name LIKE '%{$search}%' OR m.mem_email LIKE '%{$search}%') ";
+		}
+
+		$where_clause = " WHERE " . implode(' AND ', $where_conditions);
+
+		// 전체 레코드 수 조회 (검색 조건 적용 전)
+		$total_sql = "SELECT COUNT(DISTINCT m.mem_no) as total FROM MEMBER m WHERE ifnull(m.mem_outdate, 0) = 0";
+		$total_result = $this->db->query($total_sql)->row();
+		$total_records = $total_result->total;
+
+		// 필터된 레코드 수 조회 (검색 조건 적용 후) 
+		$filtered_sql = "SELECT COUNT(DISTINCT m.mem_no) as filtered 
+						FROM MEMBER m " . 
+						$where_clause;
+
+		$filtered_result = $this->db->query($filtered_sql)->row();
+		$filtered_records = $filtered_result->filtered;
+
+		// 정렬 조건
+		$order_clause = "";
+		if (!empty($param['order'][0]['column']) && !empty($param['order'][0]['dir'])) {
+			$columns = [
+				0 => 'm.mem_no',
+				1 => 'm.mem_no', 
+				2 => 'm.mem_name', 
+				3 => 'm.mem_email', 
+				4 => 'm.mem_jointype',
+				5 => 'm.mem_cash', 
+				6 => 'mem_totime', 
+				7 => 'm.mem_joindate', 
+				8 => 'm.mem_islive'
+			];
+			$column_index = intval($param['order'][0]['column']);
+			
+			if (isset($columns[$column_index])) {
+				$order_column = $columns[$column_index];
+				$order_dir = $param['order'][0]['dir'] === 'desc' ? 'DESC' : 'ASC';
+				$order_clause = " ORDER BY {$order_column} {$order_dir} ";
+			}
+		} else {
+			$order_clause = " ORDER BY m.mem_no DESC ";
+		}
+
+		// 페이징
+		$limit_clause = "";
+		if (isset($param['length']) && $param['length'] > 0) {
+			$start = intval($param['start']);
+			$length = intval($param['length']);
+			$limit_clause = " LIMIT {$start}, {$length} ";
+		}
+
+		// 최종 데이터 조회
+		$final_sql = $base_sql . $where_clause . $order_clause . $limit_clause;
+		
+		// log_message('info', 'DataTable member list SQL: ' . $final_sql);
+		
+		return [
+			'data' => $this->db->query($final_sql)->result(),
+			'total_records' => $total_records,
+			'filtered_records' => $filtered_records
+		];
+	}
+
 }

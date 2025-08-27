@@ -4,7 +4,7 @@ var boardDataTable = function() {
             type: "remote",
             source: {
                 read: {
-                    url: "https://noble.lemongstory.com/api_datatable/boardpost/" + $("#board_id").val()
+                    url: "/api_datatable/boardpost/" + $("#board_id").val()
                 }
             },
             pageSize: 10, serverPaging: true, serverFiltering: true, serverSorting: true

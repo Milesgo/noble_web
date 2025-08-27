@@ -470,7 +470,7 @@ class Admin extends CI_Controller
 
 		switch ($member_no) {
 			case '': // 목록
-				$data['memberData'] = $this->member_m->selectMemberList(array());
+				// $data['memberData'] = $this->member_m->selectMemberList(array());
 				$data['memberYesterday'] = $this->member_m->getMemberCountYesterday();
 
 				$this->load->view('admin/member_list_v', $data);
