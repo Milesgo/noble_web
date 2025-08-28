@@ -10,10 +10,15 @@ class Common
     public $s3; 
 
     public function __construct() {
+        // 퍼블릭 S3 버킷 - CORS 설정 필요
         $this->s3 = new S3Client([
             'version' => 'latest',
             'region'  => 'ap-northeast-2',
-            'signature' => 'v4'
+            'signature' => 'v4',
+            'credentials' => [
+                'key'    => 'AKIAVWACO6WCTKIPDEP5',
+                'secret' => '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'
+            ]
         ]);              
     }
 

@@ -719,7 +719,7 @@ class Admin extends CI_Controller
 					} catch (S3Exception $e) {
 					}
 
-					unlink("/data/noble/public_html/uploads/temporary/" . $picture['store_name']);
+					unlink(UPLOAD_PATH . $picture['store_name']);
 				}
 			} else {
 				// 업로드에 실패한 경우
@@ -925,7 +925,7 @@ class Admin extends CI_Controller
 						} catch (S3Exception $e) {
 						}
 
-						unlink("/data/noble/public_html/uploads/temporary/" . $picture['store_name']);
+						unlink(UPLOAD_PATH . $picture['store_name']);
 					}
 
 					echo json_encode($result);

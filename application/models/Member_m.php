@@ -543,7 +543,7 @@ class Member_m extends CI_Model {
 		// 검색 조건 추가
 		if (!empty($param['search']['value'])) {
 			$search = $this->db->escape_like_str($param['search']['value']);
-			$where_conditions[] = " (m.mem_name LIKE '%{$search}%' OR m.mem_email LIKE '%{$search}%') ";
+			$where_conditions[] = " (m.mem_no = '{$search}' OR m.mem_name LIKE '%{$search}%' OR m.mem_email LIKE '%{$search}%') ";
 		}
 
 		$where_clause = " WHERE " . implode(' AND ', $where_conditions);

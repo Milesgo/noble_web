@@ -109,7 +109,7 @@ class Common_m extends CI_Model {
 			'max_size' => 2048
 		) ;
 
-		if (! is_dir($upload_config['upload_path'])) {
+		if (!is_dir($upload_config['upload_path'])) {
 			mkdir($upload_config['upload_path'], 0777, true) ;
 		}
 
@@ -259,7 +259,7 @@ class Common_m extends CI_Model {
 							} catch (S3Exception $e) {
 							}
 
-							unlink("/data/noble/public_html/uploads/temporary/" . $picture['store_name']);
+							unlink(UPLOAD_PATH . $picture['store_name']);
 						}
 						echo json_encode($result) ;						
 					} else {
@@ -341,7 +341,7 @@ class Common_m extends CI_Model {
 				} catch (S3Exception $e) {
 				}
 
-				unlink("/data/noble/public_html/uploads/temporary/" . $upload_data['file_name']);
+				unlink(UPLOAD_PATH . $upload_data['file_name']);
 
 			} else {
 				// 업로드에 실패한 경우
