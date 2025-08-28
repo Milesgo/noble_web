@@ -223,6 +223,10 @@ class Admin extends CI_Controller
 
 						$this->common_m->allowOnlyAdmin('관리자만 작성하실 수 있습니다.');
 
+						// URI 세그먼트 확인
+						// log_message('debug', 'URI segments: ' . print_r($this->uri->segment_array(), true));
+						// log_message('debug', 'POST data: ' . print_r($_POST, true));
+
 						$song = array(
 							'song_title' => $this->input->post('song_title'),
 							'song_title_eng' => $this->input->post('song_title_eng'),
@@ -253,6 +257,8 @@ class Admin extends CI_Controller
 							'song_keyword_10' => $this->input->post('song_keyword_10'),
 							'admin_no' => $this->admin_m->getAdminId()
 						);
+
+						log_message('debug', 'Song array: ' . print_r($song, true));
 
 						$result = $this->common_m->insertAndUpdateThing('SONG', 'song_no', $song, 'SONG', '', '');
 

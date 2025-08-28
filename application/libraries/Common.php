@@ -10,18 +10,10 @@ class Common
     public $s3; 
 
     public function __construct() {
-        // 환경변수에서 AWS 자격증명 읽기 (시스템 전역 + PHP-FPM 설정)
-        $awsKey = getenv('AWS_ACCESS_KEY_ID') ?: $_ENV['AWS_ACCESS_KEY_ID'] ?? null;
-        $awsSecret = getenv('AWS_SECRET_ACCESS_KEY') ?: $_ENV['AWS_SECRET_ACCESS_KEY'] ?? null;
-        
+        // EC2 IAM 역할 사용 - credentials 없이
         $this->s3 = new S3Client([
             'version' => 'latest',
-            'region'  => 'ap-northeast-2',
-            'signature' => 'v4',
-            'credentials' => [
-                'key'    => $awsKey,
-                'secret' => $awsSecret
-            ]
+            'region'  => 'ap-northeast-2'
         ]);              
     }
 
