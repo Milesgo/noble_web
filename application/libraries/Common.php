@@ -10,14 +10,17 @@ class Common
     public $s3; 
 
     public function __construct() {
-        // 퍼블릭 S3 버킷 - CORS 설정 필요
+        // 환경변수에서 AWS 자격증명 읽기 (시스템 전역 + PHP-FPM 설정)
+        $awsKey = getenv('AWS_ACCESS_KEY_ID') ?: $_ENV['AWS_ACCESS_KEY_ID'] ?? null;
+        $awsSecret = getenv('AWS_SECRET_ACCESS_KEY') ?: $_ENV['AWS_SECRET_ACCESS_KEY'] ?? null;
+        
         $this->s3 = new S3Client([
             'version' => 'latest',
             'region'  => 'ap-northeast-2',
             'signature' => 'v4',
             'credentials' => [
-                'key'    => 'AKIAVWACO6WCTKIPDEP5',
-                'secret' => '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'
+                'key'    => $awsKey,
+                'secret' => $awsSecret
             ]
         ]);              
     }
